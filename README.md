@@ -1,6 +1,6 @@
 # use-resetable-action-state
 
-A custom hook that enhances the useActionState hook with reset function.
+A custom hook that enhances the [useActionState](https://react.dev/reference/react/useActionState) hook with reset function.
 
 ## Usage
 
