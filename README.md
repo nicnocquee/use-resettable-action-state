@@ -49,6 +49,10 @@ export default function Form() {
 }
 ```
 
+## Demo
+
+[Check out the demo here.](https://playground.nico.fyi/use-action-state/reset)
+
 ## License
 
 MIT
