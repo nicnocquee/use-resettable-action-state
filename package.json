@@ -1,6 +1,6 @@
 {
   "name": "use-resetable-action-state",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A custom hook that enhances the useActionState hook with reset function",
   "keywords": [
     "demo",
@@ -28,16 +28,22 @@
   ],
   "type": "module",
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.15.4",
+    "@arethetypeswrong/cli": "^0.18.1",
+    "@changesets/cli": "^2.29.4",
+    "@testing-library/react": "^16.3.0",
     "@types/react": "^18",
-    "@changesets/cli": "^2.27.7",
-    "prettier": "^3.3.3",
-    "tsup": "^8.2.4",
-    "typescript": "^5.6.2",
-    "vitest": "^2.0.5"
+    "@vitejs/plugin-react": "^4.4.1",
+    "jsdom": "^26.1.0",
+    "prettier": "^3.5.3",
+    "react-dom": "^19.1.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.4"
   },
   "peerDependencies": {
-    "react": "canary"
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
   },
   "scripts": {
     "build": "tsup",

@@ -1,4 +1,4 @@
-import { useActionState } from 'react';
+import { startTransition, useActionState } from 'react';
 
 export function useResetableActionState<State, Payload>(
   action: (state: Awaited<State>, payload: Payload) => State | Promise<State>,
@@ -23,7 +23,9 @@ export function useResetableActionState<State, Payload>(
   );
 
   const reset = () => {
-    submit(null);
+    startTransition(() => {
+      submit(null);
+    });
   };
 
   return [state, submit, isPending, reset];

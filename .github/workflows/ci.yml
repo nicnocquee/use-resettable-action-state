@@ -45,6 +45,11 @@ jobs:
       - name: Run CI
         run: npm run ci
 
+      - name: Set up .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish
         run: npm run local-release
         env:
