@@ -11,12 +11,11 @@ export function useResetableActionState<State, Payload>(
   reset: () => void,
 ] {
   const [state, submit, isPending] = useActionState(
-    async (state: Awaited<State>, payload: Payload | null) => {
+    (state: Awaited<State>, payload: Payload | null) => {
       if (!payload) {
         return initialState;
       }
-      const data = await action(state, payload);
-      return data;
+      return action(state, payload);
     },
     initialState,
     permalink,
