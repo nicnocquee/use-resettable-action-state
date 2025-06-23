@@ -1,6 +1,6 @@
 {
   "name": "use-resetable-action-state",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A custom hook that enhances the useActionState hook with reset function",
   "keywords": [
     "demo",
