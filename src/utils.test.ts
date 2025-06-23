@@ -36,3 +36,41 @@ test('reset function sets state back to initialState', async () => {
     expect(result.current[0]).toEqual(initialState);
   });
 });
+
+test('returns payload', async () => {
+  const initialState = { count: 0 };
+  const action = async (
+    state: typeof initialState,
+    payload: { amount: number },
+  ) => ({ count: state.count + payload.amount });
+
+  const { result } = renderHook(() =>
+    useResetableActionState(action, initialState),
+  );
+
+  // submit payload
+  await act(async () => {
+    startTransition(() => {
+      result.current[1]({ amount: 5 });
+    });
+  });
+
+  expect(result.current[4]).toEqual({ amount: 5 });
+
+  // submit payload again
+  await act(async () => {
+    startTransition(() => {
+      result.current[1]({ amount: 3 });
+    });
+  });
+
+  expect(result.current[4]).toEqual({ amount: 3 });
+
+  // reset payload
+  await act(async () => {
+    result.current[3]();
+  });
+
+  // payload should be null
+  expect(result.current[4]).toEqual(null);
+});
