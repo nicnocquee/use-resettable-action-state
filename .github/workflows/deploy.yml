@@ -11,9 +11,10 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Use Node.js
         uses: actions/setup-node@v4
