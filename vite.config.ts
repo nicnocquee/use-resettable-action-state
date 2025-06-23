@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: './src/index.ts',
-      name: 'use-resetable-action-state',
+      name: 'use-resettable-action-state',
     },
   },
   plugins: [react()],

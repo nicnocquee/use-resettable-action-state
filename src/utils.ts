@@ -9,7 +9,7 @@ import { startTransition, useActionState, useCallback, useState } from 'react';
  * @param permalink - The permalink of the action.
  * @returns Array of [state, submit function, isPending, reset function, and payload].
  */
-export function useResetableActionState<State, Payload>(
+export function useResettableActionState<State, Payload>(
   action: (state: Awaited<State>, payload: Payload) => State | Promise<State>,
   initialState: Awaited<State>,
   permalink?: string,

@@ -1,4 +1,4 @@
-# use-resetable-action-state
+# use-resettable-action-state
 
 A custom hook that enhances the [useActionState](https://react.dev/reference/react/useActionState) hook with reset function and payload state.
 
@@ -10,10 +10,10 @@ A custom hook that enhances the [useActionState](https://react.dev/reference/rea
 'use client';
 import { useRef } from 'react';
 import { doSomething } from './actions'; // server action
-import { useResetableActionState } from 'use-resetable-action-state';
+import { useResettableActionState } from 'use-resettable-action-state';
 
 export default function Form() {
-  const [state, submit, isPending, reset] = useResetableActionState(
+  const [state, submit, isPending, reset] = useResettableActionState(
     doSomething,
     null,
   );
@@ -59,10 +59,10 @@ When the action returns the new state, React will reset the form. But there are 
 'use client';
 import { useRef } from 'react';
 import { doSomething } from './actions';
-import { useResetableActionState } from 'use-resetable-action-state';
+import { useResettableActionState } from 'use-resettable-action-state';
 
 export default function Form({ initialState }: { initialState: { name: string | null, error : stting | null } }) {
-  const [state, submit, isPending, reset, payload] = useResetableActionState(
+  const [state, submit, isPending, reset, payload] = useResettableActionState(
     doSomething,
     initialState,
   );

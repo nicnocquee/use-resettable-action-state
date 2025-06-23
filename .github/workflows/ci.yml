@@ -32,4 +32,4 @@ jobs:
         run: |
           npx create-next-app@latest test-app --typescript --eslint --tailwind --app --src-dir --yes
           cd test-app
-          npm i use-resetable-action-state
+          # npm i use-resettable-action-state

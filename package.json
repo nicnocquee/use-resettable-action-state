@@ -1,6 +1,6 @@
 {
-  "name": "use-resetable-action-state",
-  "version": "0.0.7",
+  "name": "use-resettable-action-state",
+  "version": "0.0.8",
   "description": "A custom hook that enhances the useActionState hook with reset function",
   "keywords": [
     "demo",
@@ -13,14 +13,14 @@
       "require": "./dist/index.cjs"
     }
   },
-  "homepage": "https://github.com/nicnocquee/use-resetable-action-state",
+  "homepage": "https://github.com/nicnocquee/use-resettable-action-state",
   "bugs": {
-    "url": "https://github.com/nicnocquee/use-resetable-action-state/issues"
+    "url": "https://github.com/nicnocquee/use-resettable-action-state/issues"
   },
   "author": "Nico Prananta <hi@nico.fyi> (https://nico.fyi)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nicnocquee/use-resetable-action-state.git"
+    "url": "git+https://github.com/nicnocquee/use-resettable-action-state.git"
   },
   "license": "MIT",
   "files": [

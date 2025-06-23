@@ -1,4 +1,4 @@
-# use-resetable-action-state
+# use-resettable-action-state
 
 ## 0.0.3
 

@@ -1,6 +1,6 @@
 /// <reference types="vitest/globals" />
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { useResetableActionState } from './utils.js';
+import { useResettableActionState } from './utils.js';
 import { startTransition } from 'react';
 
 test('reset function sets state back to initialState', async () => {
@@ -11,7 +11,7 @@ test('reset function sets state back to initialState', async () => {
   ) => ({ count: state.count + payload.amount });
 
   const { result } = renderHook(() =>
-    useResetableActionState(action, initialState),
+    useResettableActionState(action, initialState),
   );
 
   // increment state
@@ -45,7 +45,7 @@ test('returns payload', async () => {
   ) => ({ count: state.count + payload.amount });
 
   const { result } = renderHook(() =>
-    useResetableActionState(action, initialState),
+    useResettableActionState(action, initialState),
   );
 
   // submit payload
