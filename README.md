@@ -1,10 +1,10 @@
 # use-resettable-action-state
 
-A custom hook that enhances the [useActionState](https://react.dev/reference/react/useActionState) hook with reset function and payload state.
+A custom hook that enhances the [useActionState](https://react.dev/reference/react/useActionState) hook with reset function and payload state. Read more about it in [this blog post](https://www.nico.fyi/blog/reset-state-from-react-useactionstate).
 
 ## Usage
 
-### Reseting the state
+### Resetting the state
 
 ```tsx:app/page.tsx
 'use client';
@@ -102,4 +102,4 @@ MIT
 
 ## Author
 
-Nico Prananta. Website: https://nico.fyi. Twitter: https://twitter.com/2co_p
+Nico Prananta. Website: https://nico.fyi.
