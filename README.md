@@ -18,7 +18,7 @@ npm install use-resettable-action-state
 
 ### Resetting the state
 
-In the example below, if the `doSomething` action returns an error, the error will be displayed in the form. Then, y clicking the reset button, the `state` will be reset to `null` which will clear the error message.
+In the example below, if the `doSomething` action returns an error, the error will be displayed in the form. Then, by clicking the reset button, the `state` will be resetted to `null` which will clear the error message.
 
 ```tsx:app/page.tsx
 'use client';
