@@ -76,7 +76,7 @@ export default function Form({ initialState }: { initialState: { name: string | 
         name="name"
         id="name"
         placeholder="Enter your name"
-        defaultValue={payload?.name || state?.name || initialState?.name || ''}
+        defaultValue={payload?.get('name') || state?.name || initialState?.name || ''}
       />
       <p>{state && state.data?.message}</p>
       <button type="button" onClick={() => reset()}>
