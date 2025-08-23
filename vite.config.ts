@@ -15,5 +15,17 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: '',
     types: ['vitest/globals'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'src/index.ts',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/coverage/**',
+      ],
+    },
   },
 } as UserConfig);

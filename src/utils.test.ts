@@ -3,74 +3,195 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { useResettableActionState } from './utils.js';
 import { startTransition } from 'react';
 
-test('reset function sets state back to initialState', async () => {
-  const initialState = { count: 0 };
-  const action = async (
-    state: typeof initialState,
-    payload: { amount: number },
-  ) => ({ count: state.count + payload.amount });
+describe('useResettableActionState', () => {
+  test('reset function sets state back to initialState', async () => {
+    const initialState = { count: 0 };
+    const action = async (
+      state: typeof initialState,
+      payload: { amount: number },
+    ) => ({ count: state.count + payload.amount });
 
-  const { result } = renderHook(() =>
-    useResettableActionState(action, initialState),
-  );
+    const { result } = renderHook(() =>
+      useResettableActionState(action, initialState),
+    );
 
-  // increment state
-  await act(async () => {
-    startTransition(() => {
-      result.current[1]({ amount: 5 });
+    // increment state
+    await act(async () => {
+      startTransition(() => {
+        result.current[1]({ amount: 5 });
+      });
+    });
+
+    // state should be incremented
+    await waitFor(() => {
+      expect(result.current[0]).toEqual({ count: 5 });
+    });
+
+    // reset state
+    await act(async () => {
+      result.current[3]();
+    });
+
+    // state should be back to initialState
+    await waitFor(() => {
+      expect(result.current[0]).toEqual(initialState);
     });
   });
 
-  // state should be incremented
-  await waitFor(() => {
-    expect(result.current[0]).toEqual({ count: 5 });
+  test('returns payload', async () => {
+    const initialState = { count: 0 };
+    const action = async (
+      state: typeof initialState,
+      payload: { amount: number },
+    ) => ({ count: state.count + payload.amount });
+
+    const { result } = renderHook(() =>
+      useResettableActionState(action, initialState),
+    );
+
+    // submit payload
+    await act(async () => {
+      startTransition(() => {
+        result.current[1]({ amount: 5 });
+      });
+    });
+
+    expect(result.current[4]).toEqual({ amount: 5 });
+
+    // submit payload again
+    await act(async () => {
+      startTransition(() => {
+        result.current[1]({ amount: 3 });
+      });
+    });
+
+    expect(result.current[4]).toEqual({ amount: 3 });
+
+    // reset state
+    await act(async () => {
+      result.current[3]();
+    });
+
+    // payload should be null
+    expect(result.current[4]).toEqual(null);
   });
 
-  // reset state
-  await act(async () => {
-    result.current[3]();
+  test('beforeAction can cancel the action', async () => {
+    const initialState = { count: 0 };
+    const action = async (
+      state: typeof initialState,
+      payload: { amount: number },
+    ) => ({ count: state.count + payload.amount });
+
+    const { result } = renderHook(() =>
+      useResettableActionState(
+        action,
+        initialState,
+        undefined,
+        async (payload, abortController) => {
+          abortController.abort({ count: -1 });
+          return payload;
+        },
+      ),
+    );
+
+    await act(async () => {
+      startTransition(() => {
+        result.current[1]({ amount: 5 });
+      });
+    });
+
+    expect(result.current[0]).toEqual({ count: -1 });
+    expect(result.current[4]).toEqual({ amount: 5 });
   });
 
-  // state should be back to initialState
-  await waitFor(() => {
+  test('beforeAction can cancel the action without a reason', async () => {
+    const initialState = { count: 0 };
+    const action = async (
+      state: typeof initialState,
+      payload: { amount: number },
+    ) => ({ count: state.count + payload.amount });
+
+    const { result } = renderHook(() =>
+      useResettableActionState(
+        action,
+        initialState,
+        undefined,
+        async (payload, abortController) => {
+          abortController.abort();
+          return payload;
+        },
+      ),
+    );
+
+    await act(async () => {
+      startTransition(() => {
+        result.current[1]({ amount: 5 });
+      });
+    });
+
     expect(result.current[0]).toEqual(initialState);
+    expect(result.current[4]).toEqual({ amount: 5 });
   });
-});
 
-test('returns payload', async () => {
-  const initialState = { count: 0 };
-  const action = async (
-    state: typeof initialState,
-    payload: { amount: number },
-  ) => ({ count: state.count + payload.amount });
+  test('beforeAction can cancel the action with null reason', async () => {
+    const initialState = { count: 0 };
+    const action = async (
+      state: typeof initialState,
+      payload: { amount: number },
+    ) => ({ count: state.count + payload.amount });
 
-  const { result } = renderHook(() =>
-    useResettableActionState(action, initialState),
-  );
+    const { result } = renderHook(() =>
+      useResettableActionState(
+        action,
+        initialState,
+        undefined,
+        async (payload, abortController) => {
+          abortController.abort(null);
+          return payload;
+        },
+      ),
+    );
 
-  // submit payload
-  await act(async () => {
-    startTransition(() => {
-      result.current[1]({ amount: 5 });
+    await act(async () => {
+      startTransition(() => {
+        result.current[1]({ amount: 5 });
+      });
     });
+
+    expect(result.current[0]).toEqual(initialState);
+    expect(result.current[4]).toEqual({ amount: 5 });
   });
 
-  expect(result.current[4]).toEqual({ amount: 5 });
-
-  // submit payload again
-  await act(async () => {
-    startTransition(() => {
-      result.current[1]({ amount: 3 });
+  test('beforeAction can modify the payload', async () => {
+    const initialState = { count: 1, hasToken: false };
+    const action = async (
+      state: typeof initialState,
+      payload: { amount: number; token: string },
+    ) => ({
+      count: state.count + payload.amount,
+      hasToken: payload.token === 'USDC',
     });
+
+    const { result } = renderHook(() =>
+      useResettableActionState(
+        action,
+        initialState,
+        undefined,
+        async (payload) => {
+          return { amount: payload?.amount ?? 0, token: 'USDC' };
+        },
+      ),
+    );
+
+    await act(async () => {
+      startTransition(() => {
+        result.current[1]({ amount: 5, token: '' });
+      });
+    });
+
+    // The payload returned to the caller should be the same as the one passed to the action
+    expect(result.current[4]).toEqual({ amount: 5, token: '' });
+    expect(result.current[0]).toEqual({ count: 6, hasToken: true });
   });
-
-  expect(result.current[4]).toEqual({ amount: 3 });
-
-  // reset payload
-  await act(async () => {
-    result.current[3]();
-  });
-
-  // payload should be null
-  expect(result.current[4]).toEqual(null);
 });
