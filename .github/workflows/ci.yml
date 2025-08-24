@@ -28,8 +28,8 @@ jobs:
       - name: Run CI
         run: npm run ci
 
-      - name: Install in new next.js project # make sure it can be installed in a new project
-        run: |
-          npx create-next-app@latest test-app --typescript --eslint --tailwind --app --src-dir --yes
-          cd test-app
-          # npm i use-resettable-action-state
+      # - name: Install in new next.js project # make sure it can be installed in a new project
+      #   run: |
+      #     npx create-next-app@latest test-app --typescript --eslint --tailwind --app --src-dir --yes
+      #     cd test-app
+      #     # npm i use-resettable-action-state
